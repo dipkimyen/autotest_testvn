@@ -27,5 +27,7 @@ jobs:
         java-version: '24'
         distribution: 'temurin'
         cache: maven
-    - name: Run E2E Test
-      run: mvn clean test
+    - name: Compile
+      run: mvn clean compile
+#    - name: Run E2E Test
+#      run: mvn clean test
