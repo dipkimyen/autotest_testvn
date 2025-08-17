@@ -106,45 +106,45 @@ public class ChromeTest {
         DevTools devTool = ((HasDevTools) driver).getDevTools();
 
         devTool.createSession();
-        devTool.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty(),Optional.empty()));
+        devTool.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty()));
 
         devTool.addListener(Network.requestWillBeSent(), requestSent -> {
             System.out.println("Request URL => " + requestSent.getRequest().getUrl());
             System.out.println("Request Method => " + requestSent.getRequest().getMethod());
             System.out.println("Request Headers => " + requestSent.getRequest().getHeaders().toString());
-            System.out.println("------------------------------------------------------");
+            System.out.println("----------------------------------------------------------------------");
         });
-
-        devTool.addListener(Network.responseReceived(), responseReceived -> {
-            System.out.println("Response Url => " + responseReceived.getResponse().getUrl());
+        devTool.addListener(Network.responseReceived(),responseReceived -> {
+            System.out.println("Response URL => " + responseReceived.getResponse().getUrl());
             System.out.println("Response Status => " + responseReceived.getResponse().getStatus());
             System.out.println("Response Headers => " + responseReceived.getResponse().getHeaders().toString());
-            System.out.println("Response MIME Type => " + responseReceived.getResponse().getMimeType().toString());
-            System.out.println("------------------------------------------------------");
+            System.out.println("Response MINE Type => " + responseReceived.getResponse().getMimeType().toString());
+            System.out.println("------------------------------------------------------------------------");
         });
 
-        driver.get("https://selenium.dev");
+        driver.get("https://www.selenium.dev/");
         driver.quit();
     }
 
     //8. Capture Page Performance Metrics
-    @Test
-    void openSeleniumHomePageAndCapturePerformanceMetrics(){
+        @Test
+        void openSeleniumHomePageAndCCapturePerformanceMetrics(){
         ChromeDriver driver = new ChromeDriver();
         DevTools devTools = driver.getDevTools();
         devTools.createSession();
         devTools.send(Performance.enable(Optional.empty()));
         List<Metric> metricList = devTools.send(Performance.getMetrics());
-        driver.get("https://selenium.dev");
+        driver.get("https://www.selenium.dev");
 
         Assert.assertEquals(driver.getTitle(),"Selenium");
         driver.quit();
 
-        for(Metric m : metricList) {
-            System.out.println(m.getName() + " = " + m.getValue());
+        for (Metric m : metricList){
+            System.out.println(m.getName() + "=" + m.getValue());
         }
-        driver.quit();
     }
+
+
 
     //9. Simulate Mobile Network Condition (3G/LTE)
     @Test
@@ -152,10 +152,11 @@ public class ChromeTest {
         ChromeDriver driver = new ChromeDriver();
         DevTools devTools = driver.getDevTools();
         devTools.createSession();
-        // Enable Network emulation
-        devTools.send(Network.enable(Optional.of(100000000), Optional.empty(), Optional.empty(),Optional.empty()));
 
-        // Set network conditions to emulate 3G or 4G
+        //Enable Network emulation
+        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty()));
+
+        //Set network conditions to emulation 3G or 4G
         devTools.send(Network.emulateNetworkConditions(
                 false,
                 100,
