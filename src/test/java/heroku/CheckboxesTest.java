@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CheckboxesTest {
     @Test
-    void verifySelectedCheckboxesSuccessfully() {
+    public void verifySelectedCheckboxesSuccessfully() {
         //1. Mở trình duyệt
         WebDriver driver = new ChromeDriver();
         driver.get("https://the-internet.herokuapp.com/checkboxes");
