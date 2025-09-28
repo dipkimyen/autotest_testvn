@@ -1,0 +1,15 @@
+<suite name="heroku app">
+    <test name="formAuthentication-Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="heroku.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="formAuthentication-Firefox">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+        <class name="heroku.LoginTest"/>
+    </classes>
+    </test>
+</suite>

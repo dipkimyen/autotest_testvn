@@ -1,41 +1,35 @@
 package heroku;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import base.BaseTest;
+import heroku.pages.LoginPage;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import static common.Browser.*;
 
-import static org.openqa.selenium.By.className;
-
-public class LoginTest {
-    @Test
-     void successfullWithValidCredentials() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://the-internet.herokuapp.com/login");
-
-        driver.findElement(By.id("username")).sendKeys("tomsmith");
-        driver.findElement(By.id("password")).sendKeys("SuperSecretPassword!");
-        driver.findElement(By.cssSelector("button[type=submit]")).click();
-        Thread.sleep(2000);
-        Assert.assertEquals(driver.getCurrentUrl(), "https://the-internet.herokuapp.com/secure");
-
-        String successMessage = driver.findElement(By.className("success")).getText();
-        Assert.assertTrue(successMessage.contains("You logged into a secure area!"));
-
-        driver.quit();
+public class LoginTest extends BaseTest {
+    LoginPage loginPage;
+    @BeforeMethod
+    void openPage(){
+        loginPage = new LoginPage();
+        loginPage.open();
     }
 
-    @Test
-    void LoginSuccessfully() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.saucedemo.com/");
+    @DataProvider
+    Object[][] testData(){
+        return new Object[][]{
+                {"","SuperSecretPassword!", "https://the-internet.herokuapp.com/login","error","Your username is invalid!"},
+                {"tomsmith","", "https://the-internet.herokuapp.com/login","error","Your password is invalid!"},
+        };
+    }
 
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
+    @Test(dataProvider = "testData")
+     void successfullWithValidCredentials(String username, String password, String expectedUrl, String expectedMessageType, String expectedMessageContent){
+        loginPage.login(username,password);
+        Assert.assertEquals(getCurrentUrl(), expectedUrl);
 
-        driver.quit();
+        String successMessage = loginPage.getFlashMessage(expectedMessageType);
+        Assert.assertTrue(successMessage.contains(expectedMessageContent));
     }
 }
