@@ -41,6 +41,6 @@ jobs:
       with:
         name: Test Results
         path: ${{ github.workspace }}/target/surefire-reports/TEST-*.xml
-        reporter: java-testng
+        reporter: java-junit
 
 
