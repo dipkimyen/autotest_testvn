@@ -40,6 +40,7 @@ jobs:
       if: success() || failure()
       with:
         name: Test Results
-        path: target/surefire-reports/*.xml
+        path: ${{ github.workspace }}/target/surefire-reports/TEST-*.xml
         reporter: java-testng
+
 
