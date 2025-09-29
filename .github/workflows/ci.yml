@@ -40,5 +40,6 @@ jobs:
       if: success() || failure()
       with:
         name: Test Results
-      path: target/surefire-reports/*.xml
-      reporter: java-testng
+        path: target/surefire-reports/*.xml
+        reporter: java-testng
+
